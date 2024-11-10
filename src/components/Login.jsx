@@ -1,14 +1,15 @@
-// src/components/Login.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import nitcImage from '../assets/nitc.jpg';
 import nitcLogo from '../assets/logonitc.png';
 import client from '../client';
- 
+
 const Login = () => {
   const navigate = useNavigate();
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
 
   const responseGoogle = (credentialResponse) => {
     try {
@@ -37,8 +38,7 @@ const Login = () => {
     }
   };
 
-
-return (
+  return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="relative w-full h-full">
         <img src={nitcImage} alt="NITC Background" className="w-full h-full object-cover" />
@@ -46,8 +46,25 @@ return (
           <div className="p-5">
             <img src={nitcLogo} alt="NITC Logo" width="130px" />
           </div>
-          <div className="shadow-2xl">
-            {/* Use GoogleLogin directly without clientId, render, or cookiePolicy */}
+          <div className="shadow-2xl bg-white p-5 rounded-lg">
+            <div className="mb-4">
+              <input
+                type="text"
+                placeholder="User ID"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                className="p-2 border border-gray-300 rounded w-full"
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="p-2 border border-gray-300 rounded w-full"
+              />
+            </div>
             <GoogleLogin
               onSuccess={responseGoogle}
               onError={() => console.error('Login Failed')}
@@ -55,8 +72,8 @@ return (
           </div>
         </div>
       </div>
-     </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Login
+export default Login;
